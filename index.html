@@ -1,314 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cadastro de Clientes - com Lista</title>
-  
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0a0a0a;
-      color: #e5e5e5;
-      min-height: 100vh;
-      padding: 20px;
-      position: relative;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      z-index: -3;
-    }
-    .stars {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: -2;
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      box-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.4);
-      opacity: 0.6;
-      animation: twinkle 5s infinite alternate ease-in-out;
-    }
-    @keyframes twinkle { 0%,100% {opacity:0.4; transform:scale(0.7);} 50% {opacity:1.0; transform:scale(1.15);} }
-
-    /* Estrelas (60 como antes) */
-    .star:nth-child(1)  {width:1.8px;height:1.8px;top:8%;left:12%;animation-delay:0.3s;}
-    .star:nth-child(2)  {width:1.2px;height:1.2px;top:15%;left:78%;animation-delay:1.1s;}
-    .star:nth-child(3)  {width:2.5px;height:2.5px;top:22%;left:45%;animation-delay:2.4s;}
-    .star:nth-child(4)  {width:1px;height:1px;top:28%;left:88%;animation-delay:0.9s;}
-    /* ... (mantive as 60, mas para não ficar gigante o código, imagine que estão todas aqui como na versão anterior) ... */
-    .star:nth-child(60){width:1.2px;height:1.2px;top:91%;left:40%;animation-delay:1.9s;}
-
-    .container {
-      background: rgba(17,17,17,0.94);
-      backdrop-filter: blur(10px);
-      width: 100%; max-width: 600px;
-      margin: 0 auto 40px;
-      border-radius: 16px;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.85);
-      border: 1px solid rgba(70,70,70,0.4);
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-    }
-
-    .header {
-      background: rgba(26,26,26,0.92);
-      padding: 24px;
-      text-align: center;
-      border-bottom: 1px solid #222;
-    }
-    .header h1 { font-size: 1.9rem; margin-bottom: 8px; color: #fff; }
-    .header p { color: #aaa; font-size: 0.95rem; }
-
-    .form-container { padding: 32px 28px; }
-
-    .form-group { margin-bottom: 20px; }
-    label { display:block; margin-bottom:8px; color:#ccc; font-weight:500; font-size:0.95rem; }
-    input {
-      width:100%; padding:14px 16px;
-      background:#1a1a1a; border:1px solid #333;
-      border-radius:10px; color:#e5e5e5; font-size:1rem;
-      transition: all 0.2s;
-    }
-    input::placeholder { color:#555; }
-    input:focus { outline:none; border-color:#fff; box-shadow:0 0 0 3px rgba(255,255,255,0.12); }
-
-    .row { display:flex; gap:16px; }
-    .row > div { flex:1; }
-
-    .checkbox-group { display:flex; align-items:center; gap:10px; margin:24px 0; color:#ccc; }
-    input[type="checkbox"] { accent-color:#fff; width:18px; height:18px; }
-
-    button {
-      width:100%; padding:16px;
-      background:#ffffff; color:#000;
-      border:none; border-radius:10px;
-      font-size:1.1rem; font-weight:600;
-      cursor:pointer; transition:all 0.25s;
-      margin-top:12px;
-    }
-    button:hover { background:#e0e0e0; transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,0.6); }
-
-    .success-msg {
-      background: rgba(0,200,0,0.2);
-      color: #0f0;
-      padding: 12px;
-      border-radius: 8px;
-      margin: 16px 0;
-      text-align: center;
-      display: none;
-    }
-
-    /* Lista de clientes */
-    .clients-list {
-      margin: 40px auto;
-      max-width: 800px;
-      padding: 0 20px;
-    }
-    .clients-list h2 { text-align:center; margin-bottom:20px; color:#ddd; }
-    .client-card {
-      background: rgba(30,30,30,0.9);
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    .client-card strong { color: #aaa; }
-    .clear-btn {
-      display: block;
-      margin: 30px auto;
-      padding: 12px 30px;
-      background: #ff4444;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .clear-btn:hover { background: #cc0000; }
-
-    @media (max-width: 600px) { .row { flex-direction:column; gap:20px; } }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Clientes</title>
 </head>
 <body>
 
-  <div class="stars">
-    <!-- 60 <div class="star"></div> aqui – copie da versão anterior ou gere mais se quiser -->
-    <div class="star"></div><div class="star"></div><!-- ... repita até 60 ... -->
-  </div>
+  <h1>Cadastro de Cliente</h1>
 
-  <div class="container">
-    <div class="header">
-      <h1>Cadastro de Cliente</h1>
-      <p>Preencha os dados corretamente</p>
-    </div>
+  <form action="" method="post">
 
-    <div class="form-container">
-      <div id="successMsg" class="success-msg">Cliente cadastrado com sucesso!</div>
+    <p>
+      <label for="nome">Nome completo:</label><br>
+      <input type="text" id="nome" name="nome" required>
+    </p>
 
-      <form id="cadastroForm">
+    <p>
+      <label for="cpf">CPF:</label><br>
+      <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14">
+    </p>
 
-        <div class="form-group">
-          <label for="nome">Nome completo *</label>
-          <input type="text" id="nome" required placeholder="Ex: Isabela Santos"/>
-        </div>
+    <p>
+      <label for="data_nascimento">Data de nascimento:</label><br>
+      <input type="date" id="data_nascimento" name="data_nascimento">
+    </p>
 
-        <div class="row">
-          <div class="form-group">
-            <label for="cpf">CPF *</label>
-            <input type="text" id="cpf" required placeholder="000.000.000-00" maxlength="14"/>
-          </div>
-          <div class="form-group">
-            <label for="data-nasc">Data de nascimento</label>
-            <input type="date" id="data-nasc"/>
-          </div>
-        </div>
+    <p>
+      <label for="email">E-mail:</label><br>
+      <input type="email" id="email" name="email" required>
+    </p>
 
-        <div class="row">
-          <div class="form-group">
-            <label for="email">E-mail *</label>
-            <input type="email" id="email" required placeholder="seuemail@exemplo.com"/>
-          </div>
-          <div class="form-group">
-            <label for="telefone">Celular / WhatsApp</label>
-            <input type="tel" id="telefone" placeholder="(41) 99999-9999" maxlength="15"/>
-          </div>
-        </div>
+    <p>
+      <label for="telefone">Telefone / WhatsApp:</label><br>
+      <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000">
+    </p>
 
-        <div class="row">
-          <div class="form-group">
-            <label for="estado">Estado *</label>
-            <input type="text" id="estado" required placeholder="Ex: Paraná"/>
-          </div>
-          <div class="form-group">
-            <label for="cidade">Cidade *</label>
-            <input type="text" id="cidade" required placeholder="Ex: Curitiba"/>
-          </div>
-        </div>
+    <p>
+      <label for="endereco">Endereço:</label><br>
+      <input type="text" id="endereco" name="endereco">
+    </p>
 
-        <div class="form-group">
-          <label for="endereco">Endereço</label>
-          <input type="text" id="endereco" placeholder="Rua das Flores, 123 - Centro"/>
-        </div>
+    <p>
+      <label for="cidade">Cidade:</label><br>
+      <input type="text" id="cidade" name="cidade">
+    </p>
 
-        <div class="checkbox-group">
-          <input type="checkbox" id="aceite" required/>
-          <label for="aceite">Li e aceito os <a href="#">termos</a> e <a href="#">política</a></label>
-        </div>
+    <p>
+      <label for="estado">Estado:</label><br>
+      <select id="estado" name="estado">
+        <option value="">Selecione</option>
+        <option value="AC">Acre</option>
+        <option value="AL">Alagoas</option>
+        <option value="AP">Amapá</option>
+        <option value="AM">Amazonas</option>
+        <option value="BA">Bahia</option>
+        <option value="CE">Ceará</option>
+        <option value="DF">Distrito Federal</option>
+        <option value="ES">Espírito Santo</option>
+        <option value="GO">Goiás</option>
+        <option value="MA">Maranhão</option>
+        <option value="MT">Mato Grosso</option>
+        <option value="MS">Mato Grosso do Sul</option>
+        <option value="MG">Minas Gerais</option>
+        <option value="PA">Pará</option>
+        <option value="PB">Paraíba</option>
+        <option value="PR" selected>Paraná</option>
+        <option value="PE">Pernambuco</option>
+        <option value="PI">Piauí</option>
+        <option value="RJ">Rio de Janeiro</option>
+        <option value="RN">Rio Grande do Norte</option>
+        <option value="RS">Rio Grande do Sul</option>
+        <option value="RO">Rondônia</option>
+        <option value="RR">Roraima</option>
+        <option value="SC">Santa Catarina</option>
+        <option value="SP">São Paulo</option>
+        <option value="SE">Sergipe</option>
+        <option value="TO">Tocantins</option>
+      </select>
+    </p>
 
-        <button type="submit">Cadastrar Cliente</button>
-      </form>
-    </div>
-  </div>
+    <p>
+      <label for="observacoes">Observações:</label><br>
+      <textarea id="observacoes" name="observacoes" rows="4" cols="50"></textarea>
+    </p>
 
-  <!-- Lista de clientes cadastrados -->
-  <div class="clients-list">
-    <h2>Clientes Cadastrados</h2>
-    <div id="listaClientes"></div>
-    <button class="clear-btn" id="limparTudo" style="display:none;">Limpar Todos os Cadastros</button>
-  </div>
+    <p>
+      <button type="submit">Cadastrar</button>
+      <button type="reset">Limpar formulário</button>
+    </p>
 
-  <script>
-    const form = document.getElementById('cadastroForm');
-    const listaDiv = document.getElementById('listaClientes');
-    const successMsg = document.getElementById('successMsg');
-    const limparBtn = document.getElementById('limparTudo');
-
-    // Carregar clientes do localStorage ao abrir a página
-    let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-    renderizarLista();
-
-    // Máscaras
-    document.getElementById('cpf').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g,"");
-      v = v.replace(/(\d{3})(\d)/,"$1.$2");
-      v = v.replace(/(\d{3})(\d)/,"$1.$2");
-      v = v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
-      e.target.value = v.slice(0,14);
-    });
-
-    document.getElementById('telefone').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g,"");
-      if (v.length <= 10) {
-        v = v.replace(/^(\d{2})(\d)/g,"($1) $2");
-        v = v.replace(/(\d)(\d{4})$/,"$1-$2");
-      } else {
-        v = v.replace(/^(\d{2})(\d)/g,"($1) $2");
-        v = v.replace(/(\d{5})(\d{4})$/,"$1-$2");
-      }
-      e.target.value = v.slice(0,15);
-    });
-
-    // Enviar formulário
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-
-      const novoCliente = {
-        nome: document.getElementById('nome').value.trim(),
-        cpf: document.getElementById('cpf').value.trim(),
-        dataNasc: document.getElementById('data-nasc').value,
-        email: document.getElementById('email').value.trim(),
-        telefone: document.getElementById('telefone').value.trim(),
-        estado: document.getElementById('estado').value.trim(),
-        cidade: document.getElementById('cidade').value.trim(),
-        endereco: document.getElementById('endereco').value.trim(),
-        dataCadastro: new Date().toLocaleString('pt-BR')
-      };
-
-      clientes.push(novoCliente);
-      localStorage.setItem('clientes', JSON.stringify(clientes));
-
-      successMsg.style.display = 'block';
-      setTimeout(() => successMsg.style.display = 'none', 4000);
-
-      form.reset();
-      renderizarLista();
-    });
-
-    // Renderizar lista
-    function renderizarLista() {
-      listaDiv.innerHTML = '';
-      if (clientes.length === 0) {
-        listaDiv.innerHTML = '<p style="text-align:center;color:#777;">Nenhum cliente cadastrado ainda.</p>';
-        limparBtn.style.display = 'none';
-        return;
-      }
-
-      limparBtn.style.display = 'block';
-
-      clientes.forEach((cliente, index) => {
-        const card = document.createElement('div');
-        card.className = 'client-card';
-        card.innerHTML = `
-          <strong>${cliente.nome}</strong><br>
-          CPF: ${cliente.cpf}<br>
-          E-mail: ${cliente.email}<br>
-          ${cliente.cidade} - ${cliente.estado}<br>
-          <small style="color:#888;">Cadastrado em: ${cliente.dataCadastro}</small>
-        `;
-        listaDiv.appendChild(card);
-      });
-    }
-
-    // Limpar tudo (para testes)
-    limparBtn.addEventListener('click', () => {
-      if (confirm('Tem certeza? Isso apagará TODOS os clientes cadastrados.')) {
-        clientes = [];
-        localStorage.removeItem('clientes');
-        renderizarLista();
-      }
-    });
-  </script>
+  </form>
 
 </body>
 </html>
