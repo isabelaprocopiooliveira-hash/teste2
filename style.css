@@ -1,0 +1,131 @@
+/* style.css - Tema preto e branco com estrelas */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #000;
+  color: #eee;
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+    radial-gradient(rgba(255,255,255,.9), rgba(255,255,255,.1) 2px, transparent 30px);
+  background-size: 550px 550px, 350px 350px, 450px 450px, 600px 600px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+
+.container {
+  max-width: 620px;
+  margin: 40px auto;
+  padding: 35px;
+  background: rgba(20, 20, 20, 0.85);
+  border-radius: 12px;
+  border: 1px solid #444;
+  backdrop-filter: blur(4px);
+}
+
+h1 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 35px;
+  font-size: 2.1rem;
+  text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ccc;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: #111;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #eee;
+  font-size: 1rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #aaa;
+  box-shadow: 0 0 0 3px rgba(200,200,200,0.15);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+button {
+  flex: 1;
+  padding: 14px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 180px;
+}
+
+button[type="submit"] {
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+}
+
+button[type="submit"]:hover {
+  background: #ddd;
+  transform: translateY(-2px);
+}
+
+button[type="button"] {
+  background: #333;
+  color: #eee;
+  border: 1px solid #555;
+}
+
+button[type="button"]:hover {
+  background: #444;
+  transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .container {
+    margin: 20px;
+    padding: 25px;
+  }
+  
+  .buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
