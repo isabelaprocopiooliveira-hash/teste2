@@ -44,63 +44,10 @@
         <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9">
       </div>
 
+      <!-- Campo único concatenado -->
       <div class="form-group">
-        <label for="logradouro">Endereço:</label>
-        <input type="text" id="logradouro" name="logradouro">
-      </div>
-
-      <div class="form-group">
-        <label for="numero">Número:</label>
-        <input type="text" id="numero" name="numero">
-      </div>
-
-      <div class="form-group">
-        <label for="complemento">Complemento:</label>
-        <input type="text" id="complemento" name="complemento">
-      </div>
-
-      <div class="form-group">
-        <label for="bairro">Bairro:</label>
-        <input type="text" id="bairro" name="bairro">
-      </div>
-
-      <div class="form-group">
-        <label for="cidade">Cidade:</label>
-        <input type="text" id="cidade" name="cidade">
-      </div>
-
-      <div class="form-group">
-        <label for="uf">Estado (UF):</label>
-        <select id="uf" name="uf">
-          <option value="">Selecione</option>
-          <option value="AC">AC</option>
-          <option value="AL">AL</option>
-          <option value="AP">AP</option>
-          <option value="AM">AM</option>
-          <option value="BA">BA</option>
-          <option value="CE">CE</option>
-          <option value="DF">DF</option>
-          <option value="ES">ES</option>
-          <option value="GO">GO</option>
-          <option value="MA">MA</option>
-          <option value="MT">MT</option>
-          <option value="MS">MS</option>
-          <option value="MG">MG</option>
-          <option value="PA">PA</option>
-          <option value="PB">PB</option>
-          <option value="PR" selected>PR</option>
-          <option value="PE">PE</option>
-          <option value="PI">PI</option>
-          <option value="RJ">RJ</option>
-          <option value="RN">RN</option>
-          <option value="RS">RS</option>
-          <option value="RO">RO</option>
-          <option value="RR">RR</option>
-          <option value="SC">SC</option>
-          <option value="SP">SP</option>
-          <option value="SE">SE</option>
-          <option value="TO">TO</option>
-        </select>
+        <label for="endereco_completo">Endereço completo:</label>
+        <input type="text" id="endereco_completo" name="endereco_completo" placeholder="Rua Exemplo, 123 - Ap 45 - Centro - Curitiba/PR">
       </div>
 
       <div class="buttons">
@@ -112,7 +59,7 @@
   </div>
 
   <script>
-    // Máscara para Documento (CPF ou CNPJ)
+    // Máscara Documento (CPF ou CNPJ)
     document.getElementById('documento').addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '');
       if (v.length <= 11) {
@@ -128,7 +75,7 @@
       e.target.value = v;
     });
 
-    // Máscara para Telefone
+    // Máscara Telefone
     document.getElementById('telefone').addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '');
       if (v.length <= 10) {
@@ -140,47 +87,62 @@
       e.target.value = v.slice(0, 15);
     });
 
-    // Máscara para CEP + preenchimento automático
+    // Máscara CEP + busca automática (agora mais robusta)
     const cepInput = document.getElementById('cep');
+    const enderecoInput = document.getElementById('endereco_completo');
+
     cepInput.addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2');
       e.target.value = v.slice(0, 9);
     });
 
-    // Quando o usuário sair do campo CEP → consulta ViaCEP
-    cepInput.addEventListener('blur', function() {
-      let cep = this.value.replace(/\D/g, '');  // remove tudo que não é número
+    // Dispara ao sair do campo OU após digitar 8 números
+    function buscarEndereco() {
+      let cep = cepInput.value.replace(/\D/g, '');
+      
+      if (cep.length !== 8) return;
 
-      if (cep.length !== 8) {
-        return;  // ignora se não tiver 8 dígitos
-      }
-
-      // Mostra que está carregando (opcional)
-      this.placeholder = "Buscando...";
+      cepInput.disabled = true; // evita múltiplas chamadas
+      enderecoInput.value = "Buscando endereço...";
 
       fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) throw new Error('Erro na rede');
+          return response.json();
+        })
         .then(dados => {
-          if (!dados.erro) {
-            // Preenche os campos automaticamente
-            document.getElementById('logradouro').value = dados.logradouro || '';
-            document.getElementById('bairro').value     = dados.bairro     || '';
-            document.getElementById('cidade').value     = dados.localidade  || '';
-            document.getElementById('uf').value         = dados.uf         || '';
-
-            // Opcional: foco no número depois de preencher
-            document.getElementById('numero').focus();
+          if (dados.erro) {
+            enderecoInput.value = "CEP não encontrado";
+            alert("CEP não encontrado. Verifique e digite novamente.");
           } else {
-            alert('CEP não encontrado. Verifique o número.');
+            // Monta o endereço completo
+            let endereco = '';
+            if (dados.logradouro) endereco += dados.logradouro;
+            if (dados.logradouro) endereco += ', '; // vírgula se tiver logradouro
+            // Número e complemento ficam em branco (usuário preenche depois)
+            if (dados.bairro) endereco += dados.bairro + ' - ';
+            if (dados.localidade) endereco += dados.localidade;
+            if (dados.uf) endereco += '/' + dados.uf;
+
+            enderecoInput.value = endereco.trim();
           }
         })
         .catch(erro => {
-          console.error('Erro ao consultar CEP:', erro);
-          alert('Erro ao consultar o CEP. Tente novamente.');
+          console.error(erro);
+          enderecoInput.value = "Erro ao buscar endereço";
+          alert("Não foi possível consultar o CEP. Verifique sua conexão.");
         })
         .finally(() => {
-          cepInput.placeholder = "00000-000";  // volta o placeholder normal
+          cepInput.disabled = false;
         });
+    }
+
+    cepInput.addEventListener('blur', buscarEndereco);
+    // Bônus: se digitar exatamente 9 caracteres (com traço) → busca também
+    cepInput.addEventListener('input', function() {
+      if (this.value.replace(/\D/g, '').length === 8) {
+        buscarEndereco();
+      }
     });
   </script>
 
