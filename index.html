@@ -4,23 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de Clientes</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
-    .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    h1 { text-align: center; color: #333; }
-    .form-group { margin-bottom: 18px; }
-    label { display: block; margin-bottom: 6px; font-weight: bold; color: #444; }
-    input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-    input:focus, select:focus { border-color: #007bff; outline: none; }
-    .erro { color: #d32f2f; font-size: 0.9em; margin-top: 4px; display: none; }
-    .buttons { text-align: center; margin-top: 30px; }
-    button { padding: 12px 28px; font-size: 1.05em; margin: 0 10px; border: none; border-radius: 4px; cursor: pointer; }
-    button[type="submit"] { background: #28a745; color: white; }
-    button[type="button"] { background: #6c757d; color: white; }
-    button:hover { opacity: 0.92; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
 
   <div class="container">
     <h1>Cadastro de Cliente</h1>
@@ -65,7 +55,7 @@
 
       <div class="form-group">
         <label for="numero">Número:</label>
-        <input type="text" id="numero" name="numero" style="width: 140px;">
+        <input type="text" id="numero" name="numero">
       </div>
 
       <div class="form-group">
@@ -87,15 +77,33 @@
         <label for="uf">Estado (UF):</label>
         <select id="uf" name="uf">
           <option value="">Selecione</option>
-          <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option>
-          <option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option>
-          <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
-          <option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option>
-          <option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
-          <option value="PR" selected>PR</option><option value="PE">PE</option><option value="PI">PI</option>
-          <option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option>
-          <option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option>
-          <option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+          <option value="AC">AC</option>
+          <option value="AL">AL</option>
+          <option value="AP">AP</option>
+          <option value="AM">AM</option>
+          <option value="BA">BA</option>
+          <option value="CE">CE</option>
+          <option value="DF">DF</option>
+          <option value="ES">ES</option>
+          <option value="GO">GO</option>
+          <option value="MA">MA</option>
+          <option value="MT">MT</option>
+          <option value="MS">MS</option>
+          <option value="MG">MG</option>
+          <option value="PA">PA</option>
+          <option value="PB">PB</option>
+          <option value="PR" selected>PR</option>
+          <option value="PE">PE</option>
+          <option value="PI">PI</option>
+          <option value="RJ">RJ</option>
+          <option value="RN">RN</option>
+          <option value="RS">RS</option>
+          <option value="RO">RO</option>
+          <option value="RR">RR</option>
+          <option value="SC">SC</option>
+          <option value="SP">SP</option>
+          <option value="SE">SE</option>
+          <option value="TO">TO</option>
         </select>
       </div>
 
@@ -108,15 +116,14 @@
   </div>
 
   <script>
-    // Máscara Documento (CPF ou CNPJ)
-    const docInput = document.getElementById('documento');
-    docInput.addEventListener('input', function(e) {
+    // Máscaras (simplificadas - você pode manter ou remover)
+    document.getElementById('documento').addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '');
-      if (v.length <= 11) { // CPF
+      if (v.length <= 11) {
         v = v.replace(/(\d{3})(\d)/, '$1.$2');
         v = v.replace(/(\d{3})(\d)/, '$1.$2');
         v = v.replace(/(\d{3})(\d{1,2})/, '$1-$2');
-      } else { // CNPJ
+      } else {
         v = v.replace(/^(\d{2})(\d)/, '$1.$2');
         v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
         v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
@@ -125,70 +132,20 @@
       e.target.value = v;
     });
 
-    // Máscara Telefone
-    const telInput = document.getElementById('telefone');
-    telInput.addEventListener('input', e => {
+    document.getElementById('telefone').addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '');
-      if (v.length <= 10) v = v.replace(/^(\d{2})(\d)/g, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2');
-      else if (v.length === 11) v = v.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+      if (v.length <= 10) {
+        v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
+        v = v.replace(/(\d{4})(\d)/, '$1-$2');
+      } else if (v.length === 11) {
+        v = v.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+      }
       e.target.value = v.slice(0, 15);
     });
 
-    // Máscara CEP
-    document.getElementById('cep').addEventListener('input', e => {
+    document.getElementById('cep').addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2');
       e.target.value = v.slice(0, 9);
-    });
-
-    // ViaCEP
-    document.getElementById('cep').addEventListener('blur', function() {
-      const cep = this.value.replace(/\D/g, '');
-      if (cep.length !== 8) return;
-      fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then(r => r.json())
-        .then(d => {
-          if (!d.erro) {
-            document.getElementById('logradouro').value = d.logradouro   || '';
-            document.getElementById('bairro').value     = d.bairro       || '';
-            document.getElementById('cidade').value     = d.localidade   || '';
-            document.getElementById('uf').value         = d.uf           || '';
-          }
-        })
-        .catch(() => alert('Erro ao consultar o CEP'));
-    });
-
-    // Validação básica de CPF/CNPJ (opcional – pode ser movida para o backend)
-    function validaDocumento(doc) {
-      doc = doc.replace(/\D/g, '');
-      if (doc.length === 11) {
-        // CPF validation (simplificada)
-        if (/^(\d)\1{10}$/.test(doc)) return false;
-        let soma = 0;
-        for (let i = 0; i < 9; i++) soma += parseInt(doc[i]) * (10 - i);
-        let r = (soma * 10) % 11; if (r === 10 || r === 11) r = 0;
-        if (r !== parseInt(doc[9])) return false;
-        soma = 0;
-        for (let i = 0; i < 10; i++) soma += parseInt(doc[i]) * (11 - i);
-        r = (soma * 10) % 11; if (r === 10 || r === 11) r = 0;
-        return r === parseInt(doc[10]);
-      } else if (doc.length === 14) {
-        // CNPJ validation (simplificada)
-        if (/^(\d)\1{13}$/.test(doc)) return false;
-        // ... (implementação completa omitida por brevidade – use biblioteca ou backend)
-        return true; // placeholder
-      }
-      return false;
-    }
-
-    document.getElementById('formCadastro').addEventListener('submit', function(e) {
-      const doc = docInput.value;
-      if (!validaDocumento(doc)) {
-        e.preventDefault();
-        document.getElementById('erro-documento').style.display = 'block';
-        docInput.focus();
-      } else {
-        document.getElementById('erro-documento').style.display = 'none';
-      }
     });
   </script>
 
