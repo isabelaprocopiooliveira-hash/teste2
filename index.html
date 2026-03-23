@@ -112,7 +112,7 @@
   </div>
 
   <script>
-    // Máscara Documento (CPF ou CNPJ)
+    // Máscara para Documento (CPF ou CNPJ)
     document.getElementById('documento').addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '');
       if (v.length <= 11) {
@@ -128,7 +128,7 @@
       e.target.value = v;
     });
 
-    // Máscara Telefone
+    // Máscara para Telefone
     document.getElementById('telefone').addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '');
       if (v.length <= 10) {
@@ -140,10 +140,47 @@
       e.target.value = v.slice(0, 15);
     });
 
-    // Máscara CEP
-    document.getElementById('cep').addEventListener('input', function(e) {
+    // Máscara para CEP + preenchimento automático
+    const cepInput = document.getElementById('cep');
+    cepInput.addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2');
       e.target.value = v.slice(0, 9);
+    });
+
+    // Quando o usuário sair do campo CEP → consulta ViaCEP
+    cepInput.addEventListener('blur', function() {
+      let cep = this.value.replace(/\D/g, '');  // remove tudo que não é número
+
+      if (cep.length !== 8) {
+        return;  // ignora se não tiver 8 dígitos
+      }
+
+      // Mostra que está carregando (opcional)
+      this.placeholder = "Buscando...";
+
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(dados => {
+          if (!dados.erro) {
+            // Preenche os campos automaticamente
+            document.getElementById('logradouro').value = dados.logradouro || '';
+            document.getElementById('bairro').value     = dados.bairro     || '';
+            document.getElementById('cidade').value     = dados.localidade  || '';
+            document.getElementById('uf').value         = dados.uf         || '';
+
+            // Opcional: foco no número depois de preencher
+            document.getElementById('numero').focus();
+          } else {
+            alert('CEP não encontrado. Verifique o número.');
+          }
+        })
+        .catch(erro => {
+          console.error('Erro ao consultar CEP:', erro);
+          alert('Erro ao consultar o CEP. Tente novamente.');
+        })
+        .finally(() => {
+          cepInput.placeholder = "00000-000";  // volta o placeholder normal
+        });
     });
   </script>
 
