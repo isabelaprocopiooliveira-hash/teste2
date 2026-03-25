@@ -1,4 +1,4 @@
-/* ====================== ESTILO PRETO E BRANCO BRILHOSO ====================== */
+/* ====================== STYLE CSS COMPACTO - PRETO E BRANCO BRILHOSO ====================== */
 
 * {
     margin: 0;
@@ -11,81 +11,77 @@ body {
     background: linear-gradient(135deg, #0a0a0a, #1f1f1f);
     color: #e0e0e0;
     min-height: 100vh;
-    padding: 20px;
+    padding: 15px;
 }
 
 .container {
-    max-width: 700px;
+    max-width: 650px;
     margin: 0 auto;
     background: #1a1a1a;
-    border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     overflow: hidden;
 }
 
-/* Cabeçalho */
+/* Cabeçalho menor */
 h1 {
     text-align: center;
-    padding: 28px 20px;
-    background: linear-gradient(to right, #f8f8f8, #d0d0d0);
-    color: #111111;
-    font-size: 1.85em;
+    padding: 18px 15px;
+    background: linear-gradient(to right, #f0f0f0, #c8c8c8);
+    color: #111;
+    font-size: 1.55em;
     font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Campos do formulário */
+/* Campos mais compactos */
 .form-group {
-    padding: 20px 25px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 600;
     color: #bbbbbb;
-    font-size: 0.96em;
+    font-size: 0.93em;
 }
 
 input {
     width: 100%;
-    padding: 13px 15px;
+    padding: 10px 12px;
     background: #252525;
     border: 1px solid #555;
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 1.02em;
-    transition: all 0.3s ease;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 1em;
 }
 
 input:focus {
     outline: none;
-    border-color: #ffffff;
+    border-color: #fff;
     background: #2f2f2f;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
 }
 
-/* Botões */
+/* Botões menores e mais compactos */
 .buttons {
-    padding: 25px;
+    padding: 18px 20px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
 }
 
 button {
     flex: 1;
-    padding: 15px;
-    font-size: 1.08em;
+    padding: 12px;
+    font-size: 1.02em;
     font-weight: 700;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
+    transition: all 0.3s;
 }
 
 button[type="submit"] {
@@ -94,64 +90,60 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px);
+    background: #e8e8e8;
 }
 
 #btnVerClientes {
-    background: #333333;
-    color: #ffffff;
+    background: #333;
+    color: #fff;
     border: 1px solid #666;
 }
 
 #btnVerClientes:hover {
-    background: #444444;
-    border-color: #888;
+    background: #444;
 }
 
-/* Mensagem de erro */
+/* Erro */
 .erro {
-    display: none;
     color: #ff6b6b;
-    font-size: 0.9em;
-    margin-top: 6px;
+    font-size: 0.85em;
+    margin-top: 5px;
+    display: none;
 }
 
 .erro.show {
     display: block;
 }
 
-/* Lista de Clientes */
+/* Lista de clientes compacta */
 #listaClientes {
-    padding: 0 25px 30px 25px;
+    padding: 0 20px 25px;
 }
 
 #listaClientes h2 {
-    color: #ffffff;
-    margin-bottom: 20px;
-    font-size: 1.45em;
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.35em;
     border-bottom: 2px solid #555;
-    padding-bottom: 12px;
+    padding-bottom: 8px;
 }
 
 .cliente-card {
-    background: #222222;
+    background: #222;
     border: 1px solid #555;
-    border-radius: 10px;
-    padding: 17px;
-    margin-bottom: 15px;
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    padding: 13px;
+    margin-bottom: 12px;
+    font-size: 0.97em;
 }
 
 .cliente-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    border-color: #777;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
 }
 
 .cliente-card strong {
     color: #ffffff;
-    font-size: 1.12em;
 }
 
 /* Responsivo */
@@ -159,9 +151,8 @@ button[type="submit"]:hover {
     .buttons {
         flex-direction: column;
     }
-    
     .container {
-        margin: 10px;
-        border-radius: 12px;
+        margin: 8px;
+        border-radius: 10px;
     }
 }
