@@ -6,44 +6,25 @@
   <title>Cadastro de Clientes</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .erro {
+    .erro { display: none; color: #d32f2f; font-size: 0.9em; margin-top: 5px; }
+    .erro.show { display: block; }
+
+    #listaClientes {
+      margin-top: 30px;
       display: none;
-      color: #d32f2f;
-      font-size: 0.9em;
-      margin-top: 5px;
     }
-    .erro.show {
-      display: block;
+    #listaClientes h2 {
+      margin-bottom: 15px;
     }
-
-    /* Estilo para o botão de Ver Clientes */
-    .btn-ver-clientes {
-      background-color: #1976d2;
-      color: white;
-      padding: 12px 20px;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 15px;
-      width: 100%;
-      transition: background-color 0.3s;
+    .cliente-card {
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 12px;
     }
-
-    .btn-ver-clientes:hover {
-      background-color: #1565c0;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .buttons button {
-      flex: 1;
-      padding: 12px;
-      font-size: 1.1em;
+    .cliente-card strong {
+      color: #1976d2;
     }
   </style>
 </head>
@@ -52,77 +33,66 @@
   <div class="container">
     <h1>Cadastro de Cliente</h1>
 
-    <form id="formCadastro" action="salvar_cliente.php" method="post">
-
+    <form id="formCadastro">
+      <!-- Seus campos (corrigido o label quebrado) -->
       <div class="form-group">
         <label for="nome">Nome completo / Razão Social:</label>
-        <input type="text" id="nome" name="nome" required>
+        <input type="text" id="nome" required>
       </div>
 
       <div class="form-group">
         <label for="documento">CPF / CNPJ:</label>
-        <input type="text" id="documento" name="documento" 
-               placeholder="000.000.000-00 ou 00.000.000/0001-00" 
-               maxlength="18" required>
+        <input type="text" id="documento" placeholder="000.000.000-00 ou 00.000.000/0001-00" maxlength="18" required>
         <span id="erro-documento" class="erro">Documento inválido</span>
       </div>
 
       <div class="form-group">
-        <label for="data_nascimento">Data de nascimento / Fundação:</label>
-        <input type="date" id="data_nascimento" name="data_nascimento">
+        <label for="data_nascimento">Data de nascimento:</label>
+        <input type="date" id="data_nascimento">
       </div>
 
       <div class="form-group">
         <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" required>
       </div>
 
       <div class="form-group">
         <label for="telefone">Telefone / WhatsApp:</label>
-        <input type="tel" id="telefone" name="telefone" 
-               placeholder="(41) 99999-9999" maxlength="15">
+        <input type="tel" id="telefone" placeholder="(41) 99999-9999" maxlength="15">
       </div>
 
       <div class="form-group">
         <label for="cep">CEP:</label>
-        <input type="text" id="cep" name="cep" 
-               placeholder="00000-000" maxlength="9">
+        <input type="text" id="cep" placeholder="00000-000" maxlength="9">
       </div>
 
       <div class="form-group">
         <label for="endereco_completo">Endereço completo:</label>
-        <input type="text" id="endereco_completo" name="endereco_completo" 
-               placeholder="Rua Exemplo, 123 - Ap 45 - Centro - Curitiba/PR">
+        <input type="text" id="endereco_completo" placeholder="Rua Exemplo, 123 - Ap 45 - Centro - Curitiba/PR">
       </div>
 
       <div class="buttons">
         <button type="submit">Cadastrar Cliente</button>
+        <button type="button" id="btnVerClientes">👥 Ver Clientes Cadastrados</button>
       </div>
-
-      <!-- Botão para ver clientes cadastrados -->
-      <button type="button" class="btn-ver-clientes" 
-              onclick="window.location.href='lista-clientes.html'">
-        👥 Ver Clientes Cadastrados
-      </button>
-
     </form>
+
+    <!-- Área onde os clientes vão aparecer -->
+    <div id="listaClientes">
+      <h2>Clientes Cadastrados</h2>
+      <div id="clientesContainer"></div>
+    </div>
   </div>
 
-  <!-- O resto do JavaScript permanece igual ao que eu te passei antes -->
   <script>
-    // (Cole aqui todo o JavaScript que enviei na resposta anterior - máscaras, validação CPF/CNPJ e busca de CEP)
-    // ... (para não ficar muito longo, mantenho só o essencial aqui)
-
-    const docInput = document.getElementById('documento');
-    const erroDoc = document.getElementById('erro-documento');
-
-    // Máscara Documento (CPF/CNPJ)
-    docInput.addEventListener('input', function(e) {
+    // ==================== MÁSCARAS ====================
+    // (mesmas máscaras que você já tinha, só organizei um pouco)
+    document.getElementById('documento').addEventListener('input', function(e) {
       let v = e.target.value.replace(/\D/g, '');
       if (v.length <= 11) {
         v = v.replace(/(\d{3})(\d)/, '$1.$2');
         v = v.replace(/(\d{3})(\d)/, '$1.$2');
-        v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        v = v.replace(/(\d{3})(\d{1,2})/, '$1-$2');
       } else {
         v = v.replace(/^(\d{2})(\d)/, '$1.$2');
         v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
@@ -132,36 +102,120 @@
       e.target.value = v;
     });
 
-    // Validação CPF/CNPJ (mesma função da resposta anterior)
-    function validarDocumento() {
-      const valor = docInput.value.trim();
-      if (!valor) return true;
-      const limpo = valor.replace(/\D/g, '');
-      const valido = (limpo.length === 11 && validarCPF(valor)) || 
-                     (limpo.length === 14 && validarCNPJ(valor));
-      if (valido) {
-        erroDoc.classList.remove('show');
-        return true;
+    document.getElementById('telefone').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length <= 10) {
+        v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
+        v = v.replace(/(\d{4})(\d)/, '$1-$2');
       } else {
-        erroDoc.classList.add('show');
-        return false;
+        v = v.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
       }
+      e.target.value = v.slice(0, 15);
+    });
+
+    const cepInput = document.getElementById('cep');
+    const enderecoInput = document.getElementById('endereco_completo');
+
+    cepInput.addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2');
+      e.target.value = v.slice(0, 9);
+    });
+
+    // ==================== BUSCA CEP ====================
+    function buscarEndereco() {
+      let cep = cepInput.value.replace(/\D/g, '');
+      if (cep.length !== 8) return;
+
+      cepInput.disabled = true;
+      enderecoInput.value = "Buscando...";
+
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(r => r.json())
+        .then(dados => {
+          if (dados.erro) {
+            enderecoInput.value = "CEP não encontrado";
+          } else {
+            let end = `${dados.logradouro || ''}, ${dados.bairro || ''} - ${dados.localidade || ''}/${dados.uf || ''}`;
+            enderecoInput.value = end.replace(/,\s* -/g, '').trim();
+          }
+        })
+        .catch(() => enderecoInput.value = "Erro ao buscar CEP")
+        .finally(() => cepInput.disabled = false);
     }
 
-    function validarCPF(cpf) { /* mesma função anterior */ }
-    function validarCNPJ(cnpj) { /* mesma função anterior */ }
+    cepInput.addEventListener('blur', buscarEndereco);
+    cepInput.addEventListener('input', () => {
+      if (cepInput.value.replace(/\D/g, '').length === 8) buscarEndereco();
+    });
 
-    docInput.addEventListener('blur', validarDocumento);
-
+    // ==================== SALVAR E LISTAR CLIENTES ====================
     const form = document.getElementById('formCadastro');
-    form.addEventListener('submit', function(e) {
-      if (!validarDocumento()) {
-        e.preventDefault();
-        docInput.focus();
+    const btnVer = document.getElementById('btnVerClientes');
+    const listaDiv = document.getElementById('listaClientes');
+    const container = document.getElementById('clientesContainer');
+
+    let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+
+    function salvarCliente(e) {
+      e.preventDefault();
+
+      const novoCliente = {
+        nome: document.getElementById('nome').value,
+        documento: document.getElementById('documento').value,
+        data: document.getElementById('data_nascimento').value,
+        email: document.getElementById('email').value,
+        telefone: document.getElementById('telefone').value,
+        endereco: document.getElementById('endereco_completo').value
+      };
+
+      clientes.push(novoCliente);
+      localStorage.setItem('clientes', JSON.stringify(clientes));
+
+      alert('Cliente cadastrado com sucesso!');
+      form.reset();
+      mostrarClientes(); // atualiza a lista automaticamente
+    }
+
+    function mostrarClientes() {
+      container.innerHTML = '';
+
+      if (clientes.length === 0) {
+        container.innerHTML = '<p>Nenhum cliente cadastrado ainda.</p>';
+        return;
+      }
+
+      clientes.forEach((cliente, index) => {
+        const card = document.createElement('div');
+        card.className = 'cliente-card';
+        card.innerHTML = `
+          <strong>${cliente.nome}</strong><br>
+          Documento: ${cliente.documento}<br>
+          ${cliente.data ? 'Data: ' + cliente.data + '<br>' : ''}
+          E-mail: ${cliente.email}<br>
+          Telefone: ${cliente.telefone || 'Não informado'}<br>
+          Endereço: ${cliente.endereco || 'Não informado'}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Alternar exibição da lista
+    btnVer.addEventListener('click', () => {
+      if (listaDiv.style.display === 'block') {
+        listaDiv.style.display = 'none';
+        btnVer.textContent = '👥 Ver Clientes Cadastrados';
+      } else {
+        mostrarClientes();
+        listaDiv.style.display = 'block';
+        btnVer.textContent = '👥 Ocultar Clientes';
       }
     });
 
-    // Máscaras de telefone e CEP (pode colar também se quiser completo)
+    // Submissão do formulário
+    form.addEventListener('submit', salvarCliente);
+
+    // Mostrar lista automaticamente se já tiver clientes (opcional)
+    // mostrarClientes(); // descomente se quiser que apareça logo ao carregar
   </script>
 
 </body>
