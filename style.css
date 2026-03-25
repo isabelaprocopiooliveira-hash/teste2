@@ -1,103 +1,167 @@
+/* ====================== ESTILO PRETO E BRANCO BRILHOSO ====================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  margin: 0;
-  padding: 20px;
-  background: #111111;
-  color: #eeeeee;
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0a0a, #1f1f1f);
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .container {
-  max-width: 600px;
-  margin: 0 auto;
-  background: #1a1a1a;
-  padding: 30px;
-  border-radius: 8px;
-  border: 1px solid #333333;
+    max-width: 700px;
+    margin: 0 auto;
+    background: #1a1a1a;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
 }
 
+/* Cabeçalho */
 h1 {
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 30px;
-  font-size: 1.8rem;
+    text-align: center;
+    padding: 28px 20px;
+    background: linear-gradient(to right, #f8f8f8, #d0d0d0);
+    color: #111111;
+    font-size: 1.85em;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
+/* Campos do formulário */
 .form-group {
-  margin-bottom: 20px;
+    padding: 20px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 label {
-  display: block;
-  margin-bottom: 6px;
-  color: #cccccc;
-  font-weight: normal;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #bbbbbb;
+    font-size: 0.96em;
 }
 
-input, select {
-  width: 100%;
-  padding: 10px;
-  background: #222222;
-  border: 1px solid #444444;
-  color: #eeeeee;
-  border-radius: 4px;
-  font-size: 1rem;
-  box-sizing: border-box;
+input {
+    width: 100%;
+    padding: 13px 15px;
+    background: #252525;
+    border: 1px solid #555;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1.02em;
+    transition: all 0.3s ease;
 }
 
-input:focus, select:focus {
-  outline: none;
-  border-color: #777777;
+input:focus {
+    outline: none;
+    border-color: #ffffff;
+    background: #2f2f2f;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
-input::placeholder {
-  color: #666666;
-}
-
-.erro {
-  color: #ff5555;
-  font-size: 0.9rem;
-  margin-top: 4px;
-  display: none;
-}
-
+/* Botões */
 .buttons {
-  text-align: center;
-  margin-top: 30px;
+    padding: 25px;
+    display: flex;
+    gap: 12px;
 }
 
 button {
-  padding: 12px 24px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 0 10px;
+    flex: 1;
+    padding: 15px;
+    font-size: 1.08em;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
 }
 
 button[type="submit"] {
-  background: #444444;
-  color: #ffffff;
+    background: #ffffff;
+    color: #0f0f0f;
 }
 
-button[type="button"] {
-  background: #333333;
-  color: #dddddd;
+button[type="submit"]:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
 }
 
-button:hover {
-  background: #555555;
+#btnVerClientes {
+    background: #333333;
+    color: #ffffff;
+    border: 1px solid #666;
 }
 
-/* Responsividade mínima */
-@media (max-width: 500px) {
-  .container {
-    padding: 20px;
-  }
-  
-  button {
+#btnVerClientes:hover {
+    background: #444444;
+    border-color: #888;
+}
+
+/* Mensagem de erro */
+.erro {
+    display: none;
+    color: #ff6b6b;
+    font-size: 0.9em;
+    margin-top: 6px;
+}
+
+.erro.show {
     display: block;
-    width: 100%;
-    margin: 10px 0;
-  }
+}
+
+/* Lista de Clientes */
+#listaClientes {
+    padding: 0 25px 30px 25px;
+}
+
+#listaClientes h2 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 1.45em;
+    border-bottom: 2px solid #555;
+    padding-bottom: 12px;
+}
+
+.cliente-card {
+    background: #222222;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 17px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.cliente-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border-color: #777;
+}
+
+.cliente-card strong {
+    color: #ffffff;
+    font-size: 1.12em;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .buttons {
+        flex-direction: column;
+    }
+    
+    .container {
+        margin: 10px;
+        border-radius: 12px;
+    }
 }
