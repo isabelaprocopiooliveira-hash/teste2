@@ -1,4 +1,4 @@
-/* ====================== STYLE CSS COMPACTO - PRETO E BRANCO BRILHOSO ====================== */
+/* ====================== STYLE CSS - UNIVERSO PRETO E BRANCO COM BRILHO ====================== */
 
 * {
     margin: 0;
@@ -8,151 +8,141 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0a0a0a, #1f1f1f);
+    background: radial-gradient(circle at center, #0f0f1e 0%, #000000 70%);
     color: #e0e0e0;
     min-height: 100vh;
-    padding: 15px;
-}
-
-.container {
-    max-width: 650px;
-    margin: 0 auto;
-    background: #1a1a1a;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     overflow: hidden;
+    position: relative;
 }
 
-/* Cabeçalho menor */
-h1 {
+/* Efeito sutil de estrelas no fundo */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,0.8) 1px, transparent 1px),
+        radial-gradient(white, rgba(255,255,255,0.6) 1px, transparent 1px);
+    background-size: 80px 80px, 120px 120px;
+    background-position: 0 0, 40px 60px;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.login-container {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-box {
+    background: rgba(20, 20, 35, 0.92);
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.8),
+        inset 0 0 60px rgba(255, 255, 255, 0.06),
+        0 0 80px rgba(180, 200, 255, 0.08);
+    overflow: hidden;
     text-align: center;
-    padding: 18px 15px;
-    background: linear-gradient(to right, #f0f0f0, #c8c8c8);
-    color: #111;
-    font-size: 1.55em;
-    font-weight: 700;
-    letter-spacing: 1px;
+    padding: 50px 35px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
 }
 
-/* Campos mais compactos */
+.login-box h1 {
+    font-size: 2.1em;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: #a0a0c0;
+    font-size: 1.15em;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
 .form-group {
-    padding: 14px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    margin-bottom: 22px;
+    text-align: left;
 }
 
 label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 7px;
     font-weight: 600;
-    color: #bbbbbb;
-    font-size: 0.93em;
+    color: #c0c0d0;
+    font-size: 0.95em;
+    letter-spacing: 0.5px;
 }
 
 input {
     width: 100%;
-    padding: 10px 12px;
-    background: #252525;
-    border: 1px solid #555;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 1em;
+    padding: 14px 16px;
+    background: rgba(30, 30, 50, 0.9);
+    border: 1px solid rgba(120, 120, 160, 0.4);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1.05em;
+    transition: all 0.3s ease;
 }
 
 input:focus {
     outline: none;
-    border-color: #fff;
-    background: #2f2f2f;
-    box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+    border-color: #ffffff;
+    background: rgba(40, 40, 70, 0.95);
+    box-shadow: 0 0 0 4px rgba(200, 220, 255, 0.15);
 }
 
-/* Botões menores e mais compactos */
-.buttons {
-    padding: 18px 20px;
-    display: flex;
-    gap: 10px;
-}
-
-button {
-    flex: 1;
-    padding: 12px;
-    font-size: 1.02em;
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    background: linear-gradient(to right, #f8f8f8, #e0e0e0);
+    color: #111111;
+    font-size: 1.12em;
     font-weight: 700;
     border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-button[type="submit"] {
-    background: #ffffff;
-    color: #0f0f0f;
-}
-
-button[type="submit"]:hover {
-    background: #e8e8e8;
-}
-
-#btnVerClientes {
-    background: #333;
-    color: #fff;
-    border: 1px solid #666;
-}
-
-#btnVerClientes:hover {
-    background: #444;
-}
-
-/* Erro */
-.erro {
-    color: #ff6b6b;
-    font-size: 0.85em;
-    margin-top: 5px;
-    display: none;
-}
-
-.erro.show {
-    display: block;
-}
-
-/* Lista de clientes compacta */
-#listaClientes {
-    padding: 0 20px 25px;
-}
-
-#listaClientes h2 {
-    color: #fff;
-    margin-bottom: 15px;
-    font-size: 1.35em;
-    border-bottom: 2px solid #555;
-    padding-bottom: 8px;
-}
-
-.cliente-card {
-    background: #222;
-    border: 1px solid #555;
     border-radius: 8px;
-    padding: 13px;
-    margin-bottom: 12px;
-    font-size: 0.97em;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.cliente-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+.btn-login:hover {
+    background: linear-gradient(to right, #ffffff, #f0f0f0);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
 }
 
-.cliente-card strong {
-    color: #ffffff;
+.footer {
+    margin-top: 40px;
+    color: #707080;
+    font-size: 0.9em;
 }
 
 /* Responsivo */
-@media (max-width: 600px) {
-    .buttons {
-        flex-direction: column;
+@media (max-width: 480px) {
+    .login-box {
+        padding: 40px 25px;
     }
-    .container {
-        margin: 8px;
-        border-radius: 10px;
+    
+    .login-box h1 {
+        font-size: 1.85em;
     }
 }
