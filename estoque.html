@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque - Achadinhos da Vivi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>♻️ Achadinhos da Vivi</h1>
+        <p>Cadastro de Produtos no Estoque</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="cliente.html">Clientes</a></li>
+            <li><a href="estoque.html">Estoque</a></li>
+            <li><a href="financeiro.html">Vendas</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2>Adicionar Novo Produto</h2>
+            <form id="produtoForm">
+                <label>Nome do Produto</label>
+                <input type="text" id="produtoNome" placeholder="Ex: Vestido Floral Vintage" required>
+
+                <label>Marca</label>
+                <input type="text" id="marca" placeholder="Ex: Zara, Shein, etc">
+
+                <label>Tamanho</label>
+                <select id="tamanho">
+                    <option value="">Selecione</option>
+                    <option>P</option>
+                    <option>M</option>
+                    <option>G</option>
+                    <option>GG</option>
+                </select>
+
+                <label>Preço de Custo (R$)</label>
+                <input type="number" id="precoCusto" step="0.01" placeholder="15.50">
+
+                <label>Preço de Venda (R$)</label>
+                <input type="number" id="precoVenda" step="0.01" placeholder="45.00" required>
+
+                <label>Descrição</label>
+                <textarea id="descricao" rows="4" placeholder="Detalhes do produto..."></textarea>
+
+                <button type="submit">Cadastrar Produto no Estoque</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Achadinhos da Vivi</p>
+    </footer>
+
+    <script>
+        document.getElementById('produtoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Produto cadastrado com sucesso no estoque! 🛍️');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
