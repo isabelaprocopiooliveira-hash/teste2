@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas - Achadinhos da Vivi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>♻️ Achadinhos da Vivi</h1>
+        <p>Registro de Vendas</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="cliente.html">Clientes</a></li>
+            <li><a href="estoque.html">Estoque</a></li>
+            <li><a href="financeiro.html">Vendas</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2>Registrar Nova Venda</h2>
+            <form id="vendaForm">
+                <label>Cliente</label>
+                <select id="clienteVenda" required>
+                    <option value="">Selecione o cliente</option>
+                    <option>Maria Silva</option>
+                    <option>Ana Costa</option>
+                    <option>Joana Pereira</option>
+                </select>
+
+                <label>Produto Vendido</label>
+                <input type="text" id="produtoVendido" placeholder="Nome do produto" required>
+
+                <label>Valor da Venda (R$)</label>
+                <input type="number" id="valorVenda" step="0.01" placeholder="89.90" required>
+
+                <label>Data da Venda</label>
+                <input type="date" id="dataVenda" required>
+
+                <label>Forma de Pagamento</label>
+                <select id="pagamento">
+                    <option>Pix</option>
+                    <option>Dinheiro</option>
+                    <option>Cartão de Crédito</option>
+                    <option>Cartão de Débito</option>
+                </select>
+
+                <button type="submit">Registrar Venda</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Achadinhos da Vivi - Brechó Online</p>
+    </footer>
+
+    <script>
+        document.getElementById('vendaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Venda registrada com sucesso! 💰');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
