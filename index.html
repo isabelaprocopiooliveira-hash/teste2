@@ -1,54 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Cadastro de Clientes</title>
+  <title>Achadinhos Vivi</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="login-container">
-    <div class="login-box">
-      <h1>Acesso ao Sistema</h1>
-      <p class="subtitle">Cadastro de Clientes</p>
+  <header>
+    <h1>Achadinhos Vivi</h1>
+    <p>Brechó Online • Moda com História</p>
+  </header>
 
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="usuario">Usuário</label>
-          <input type="text" id="usuario" placeholder="Digite seu usuário" required>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="cliente.html">Clientes</a>
+    <a href="estoque.html">Estoque</a>
+    <a href="financeiro.html">Vendas</a>
+  </nav>
+
+  <div class="container">
+    <div class="form-box">
+      <h2>Bem-vinda ao Achadinhos Vivi</h2>
+      <p style="text-align:center; font-size:1.1rem; margin:30px 0;">
+        Gerencie seu brechó de forma simples e elegante
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+        <div class="card-box" style="text-align:center; cursor:pointer;" onclick="window.location='cliente.html'">
+          <h3>Clientes</h3>
+          <p>Cadastrar e gerenciar clientes</p>
         </div>
-
-        <div class="form-group">
-          <label for="senha">Senha</label>
-          <input type="password" id="senha" placeholder="Digite sua senha" required>
+        <div class="card-box" style="text-align:center; cursor:pointer;" onclick="window.location='estoque.html'">
+          <h3>Estoque</h3>
+          <p>Gerenciar produtos e fotos</p>
         </div>
-
-        <button type="submit" class="btn-login">Entrar</button>
-      </form>
-
-      <div class="footer">
-        <p>Demo - Sistema de Cadastro</p>
+        <div class="card-box" style="text-align:center; cursor:pointer;" onclick="window.location='financeiro.html'">
+          <h3>Vendas</h3>
+          <p>Registrar novas vendas</p>
+        </div>
       </div>
     </div>
+
+    <button class="btn-voltar" onclick="window.location='index.html'">Voltar ao Início</button>
   </div>
-
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const usuario = document.getElementById('usuario').value.trim();
-      const senha = document.getElementById('senha').value.trim();
-
-      // Simulação simples de login (pode melhorar depois)
-      if (usuario && senha) {
-        alert('Login realizado com sucesso!');
-        window.location.href = 'cadastro.html';   // ← muda para o nome do seu arquivo de cadastro
-      } else {
-        alert('Por favor, preencha usuário e senha.');
-      }
-    });
-  </script>
 
 </body>
 </html>
