@@ -1,50 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Achadinhos Vivi</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achadinhos da Vivi - Brechó Online</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>♻️ Achadinhos da Vivi</h1>
+        <p>Brechó Online - Moda Sustentável e Estilo Único</p>
+    </header>
 
-  <header>
-    <h1>Achadinhos Vivi</h1>
-    <p>Brechó Online • Moda com História</p>
-  </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="cliente.html">Clientes</a></li>
+            <li><a href="estoque.html">Estoque</a></li>
+            <li><a href="financeiro.html">Vendas</a></li>
+        </ul>
+    </nav>
 
-  <nav>
-    <a href="index.html">Início</a>
-    <a href="cliente.html">Clientes</a>
-    <a href="estoque.html">Estoque</a>
-    <a href="financeiro.html">Vendas</a>
-  </nav>
-
-  <div class="container">
-    <div class="form-box">
-      <h2>Bem-vinda ao Achadinhos Vivi</h2>
-      <p style="text-align:center; font-size:1.1rem; margin:30px 0;">
-        Gerencie seu brechó de forma simples e elegante
-      </p>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
-        <div class="card-box" style="text-align:center; cursor:pointer;" onclick="window.location='cliente.html'">
-          <h3>Clientes</h3>
-          <p>Cadastrar e gerenciar clientes</p>
+    <div class="container">
+        <div class="card">
+            <h2>Bem-vinda de volta, Vivi! 💖</h2>
+            
+            <h3>Login</h3>
+            <form id="loginForm">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+                
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" placeholder="••••••••" required>
+                
+                <button type="submit">Entrar no Sistema</button>
+            </form>
+            
+            <p style="text-align: center; margin-top: 1rem;">
+                Não tem conta? <a href="cliente.html" style="color: #c026d3;">Cadastre um novo cliente</a>
+            </p>
         </div>
-        <div class="card-box" style="text-align:center; cursor:pointer;" onclick="window.location='estoque.html'">
-          <h3>Estoque</h3>
-          <p>Gerenciar produtos e fotos</p>
+
+        <div class="card">
+            <h2>🏷️ Nossos Achadinhos em Destaque</h2>
+            <p style="text-align: center; font-size: 1.1rem; color: #666;">
+                Aqui você gerencia seu brechó com amor e estilo!<br>
+                Cadastre produtos, clientes e registre suas vendas.
+            </p>
         </div>
-        <div class="card-box" style="text-align:center; cursor:pointer;" onclick="window.location='financeiro.html'">
-          <h3>Vendas</h3>
-          <p>Registrar novas vendas</p>
-        </div>
-      </div>
     </div>
 
-    <button class="btn-voltar" onclick="window.location='index.html'">Voltar ao Início</button>
-  </div>
+    <footer class="footer">
+        <p>&copy; 2026 Achadinhos da Vivi - Brechó Online | Feito com carinho para a Vivi ❤️</p>
+    </footer>
 
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login realizado com sucesso! Bem-vinda ao sistema, Vivi! ✨');
+            window.location.href = "estoque.html";
+        });
+    </script>
 </body>
 </html>
